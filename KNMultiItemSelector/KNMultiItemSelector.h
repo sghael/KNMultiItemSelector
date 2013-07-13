@@ -39,7 +39,7 @@ typedef enum {
   UIButton * selectedModeButton;
   UIImageView * modeIndicatorImageView;
   UIView * textFieldWrapper;
-    
+
   NSInteger maximumItemsSelected;
   NSInteger tag;
 

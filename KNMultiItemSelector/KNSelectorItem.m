@@ -21,6 +21,17 @@
 }
 
 -(id)initWithDisplayValue:(NSString*)displayVal
+              detailValue:(NSString *)detailVal
+              selectValue:(NSString *)selectVal {
+    if ((self=[super init])) {
+        self.displayValue = displayVal;
+        self.detailValue = detailVal;
+        self.selectValue = selectVal;
+    }
+    return self;
+}
+
+-(id)initWithDisplayValue:(NSString*)displayVal
               selectValue:(NSString*)selectVal
                  imageUrl:(NSString*)image {
   if ((self=[super init])) {

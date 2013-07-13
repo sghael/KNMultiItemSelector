@@ -235,7 +235,7 @@
   static NSString *CellIdentifier = @"KNSelectorItemCell";
   UITableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
   }
 
   // Which item?
@@ -243,6 +243,10 @@
 
   // Change the cell appearance
   cell.textLabel.text = item.displayValue;
+
+  if (item.detailValue) {
+    cell.detailTextLabel.text = item.detailValue;
+  }
   if (item.imageUrl) {
     [cell.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl] placeholderImage:[UIImage imageNamed:@"KNDefaultImage"]];
   }

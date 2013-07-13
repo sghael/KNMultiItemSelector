@@ -9,6 +9,8 @@
 @interface KNSelectorItem : NSObject
 
 @property (strong,nonatomic) NSString * displayValue;
+@property (strong,nonatomic) NSString * detailValue;
+
 @property (strong,nonatomic) NSString * selectValue;
 @property (strong,nonatomic) NSString * imageUrl;
 @property (strong, nonatomic) UIImage *image;
@@ -16,6 +18,10 @@
 
 // Init with a simple value and no image
 -(id)initWithDisplayValue:(NSString*)displayVal;
+
+-(id)initWithDisplayValue:(NSString*)displayVal
+              detailValue:(NSString*)detailValue
+              selectValue:(NSString*)selectVal;
 
 // Init with a display value that is different from actual value and with optional image
 -(id)initWithDisplayValue:(NSString*)displayVal
