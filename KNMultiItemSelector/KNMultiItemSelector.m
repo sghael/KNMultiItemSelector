@@ -47,9 +47,9 @@
     self.useRecentItems = NO;
     self.recentItemStorageKey = @"recent_selected_items";
     self.allowModeButtons = YES;
-    
+
     placeholderText = _placeholder;
-    
+
     // Initialize item arrays
     items = [_items mutableCopy];
     if (_preselectedItems) {
@@ -87,16 +87,16 @@
 }
 
 -(void)loadView {
-  self.view = [[UIView alloc] initWithFrame:CGRectZero];  
+  self.view = [[UIView alloc] initWithFrame:CGRectZero];
   self.view.backgroundColor = [UIColor whiteColor];
-  
+
   // Initialize tableView
   self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
   self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:self.tableView];
-  
+
   // Initialize search text field
   textFieldWrapper = [[UIView alloc] initWithFrame:CGRectZero];
   textFieldWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -122,13 +122,13 @@
   self.searchTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   [self.view addSubview:textFieldWrapper];
   [textFieldWrapper addSubview:self.searchTextField];
-  
+
   // Image indicator
   modeIndicatorImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"KNSelectorTip"]];
   modeIndicatorImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   modeIndicatorImageView.contentMode = UIViewContentModeCenter;
   [self.view addSubview:modeIndicatorImageView];
-  
+
   // Two mode buttons
   normalModeButton = [UIButton buttonWithType:UIButtonTypeCustom];
   selectedModeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -146,7 +146,7 @@
   [self.view addSubview:normalModeButton];
   [self.view addSubview:selectedModeButton];
   [self updateSelectedCount];
-  
+
   // Nav bar button
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didFinish)];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancel)];
@@ -174,7 +174,7 @@
   [self showHideModeButtons];
 }
 
--(void)showHideModeButtons {  
+-(void)showHideModeButtons {
   normalModeButton.hidden = selectedModeButton.hidden = modeIndicatorImageView.hidden = !self.allowModeButtons;
 
   CGRect tableFrame = self.tableView.frame;
@@ -249,7 +249,7 @@
   if (item.image) {
     [cell.imageView setImage:item.image];
   }
-    
+
   cell.accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
   return cell;
@@ -260,7 +260,7 @@
 -(void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(maximumItemsSelected > 0 && (self.selectedItems.count >= maximumItemsSelected && [self itemAtIndexPath:indexPath].selected == NO))
-    { 
+    {
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", @"")
                                     message:NSLocalizedString(@"You've reached the maximum number of selectable items.", @"")
                                    delegate:nil
@@ -272,10 +272,10 @@
         // Which item?
         KNSelectorItem * item = [self itemAtIndexPath:indexPath];
         item.selected = !item.selected;
-        
+
         // Recount selected items
         [self updateSelectedCount];
-        
+
         // Update UI
         [_tableView deselectRowAtIndexPath:indexPath animated:YES];
         [_tableView cellForRowAtIndexPath:indexPath].accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
@@ -283,7 +283,7 @@
             self.searchTextField.tag = 1;
             [self.searchTextField resignFirstResponder];
         }
-        
+
         // Delegate callback
         if (item.selected) {
             if ([delegate respondsToSelector:@selector(selector:didSelectItem:)]) [delegate selector:self didSelectItem:item];
@@ -387,7 +387,7 @@
 
 -(void)didFinish {
   // Delegate callback
-  if ([delegate respondsToSelector:@selector(selectorDidFinishSelectionWithItems:)]) {
+  if ([delegate respondsToSelector:@selector(selector:didFinishSelectionWithItems:)]) {
     [delegate selector:self didFinishSelectionWithItems:self.selectedItems];
   }
 
@@ -492,7 +492,7 @@
   modeIndicatorImageView = nil;
   normalModeButton = nil;
   selectedModeButton = nil;
-  
+
   [super viewDidUnload];
 }
 
